@@ -1,4 +1,4 @@
-FROM python:3.11.4-alpine3.17 as builder
+FROM python:3.11.4-alpine3.18 as builder
 
 ARG POETRY_VIRTUALENVS_CREATE="true"
 
@@ -7,6 +7,7 @@ ENV POETRY_HOME="/app/.poetry" \
     POETRY_VIRTUALENVS_CREATE="${POETRY_VIRTUALENVS_CREATE}"
 
 RUN apk add --update bash curl openssl libstdc++ proj-util \ 
+    && apk del py3-setuptools \ 
     && pip3 install pip --no-cache-dir --upgrade pip \
                                                  cython \
                                                  virtualenv \ 
@@ -35,6 +36,8 @@ COPY --from=builder ["/", "/"]
 
 USER python
 WORKDIR "/app"
+
+EXPOSE 8000
 
 ENTRYPOINT ["/opt/entrypoint.sh"]
 
