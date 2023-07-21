@@ -1,13 +1,22 @@
 ---
 kind: pipeline
 type: docker
-name: docker-build-push_frontend
+name: docker-build-push
 
 platform:
   os: linux
   arch: amd64
 
 steps:
+  - name: send-tags-to-tags-file
+    image: node
+    when:
+      event:
+        - push
+        - pull_request
+    commands:
+      - echo -n "$(date +'%Y%m%dT%H%M%S'), ${DRONE_COMMIT}, ${DRONE_COMMIT}.${DRONE_BUILD_NUMBER}, latest" > .tags
+      
 - name: build-and-push-image
   image: plugins/docker
   settings:
