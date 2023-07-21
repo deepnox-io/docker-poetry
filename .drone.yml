@@ -8,15 +8,7 @@ platform:
   arch: amd64
 
 steps:
-  - name: send-tags-to-tags-file
-    image: node
-    when:
-      event:
-        - push
-        - pull_request
-    commands:
-      - echo -n "$(date +'%Y%m%dT%H%M%S'), `${DRONE_TAG} | sed -e 's/^v//g'`, ${DRONE_COMMIT}, ${DRONE_COMMIT}.${DRONE_BUILD_NUMBER}, latest" > .tags
-      
+    
 - name: build-and-push-image
   image: plugins/docker
   settings:
@@ -25,7 +17,10 @@ steps:
     password: 
       from_secret: docker_password
     repo: deepnox/docker-poetry
-    tags: ${DRONE_COMMIT}.${DRONE_BUILD_NUMBER}
+    tags: 
+      - ${DRONE_COMMIT}.${DRONE_BUILD_NUMBER}
+      - ${DRONE_TAG/v/}
+      - latest
     dockerfile: ./Dockerfile 
     context: .
 
