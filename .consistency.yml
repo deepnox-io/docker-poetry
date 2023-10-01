@@ -1,0 +1,18 @@
+docker:
+  image:
+    name: deepnox/python-poetry
+    tag: "python{{ vars.python.version }}-alpine{{ vers.os.alpine.version }}-poetry{{ vars.poetry.version }}" 
+  dockerfiles:
+    - name: Alpine
+      template: https://deepnox-io/docker-poetry/.ops/templates/alpine.dockerfile.j2 
+      dest: ./Dockerfile.alpine
+
+vars:
+  os:
+    alpine:
+      version: "3.18"
+  python: 
+    version: "3.11.5"
+  poetry:
+    version: "1.6.1"
+

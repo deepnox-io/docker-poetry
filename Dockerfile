@@ -1,9 +1,9 @@
-FROM python:3.11.4-alpine3.18 as builder
+FROM python:3.11.5-alpine3.18 as builder
 
 ARG POETRY_VIRTUALENVS_CREATE="true"
 
 ENV POETRY_HOME="/app/.poetry" \
-    POETRY_VERSION="1.5.1" \
+    POETRY_VERSION="1.6.1" \
     POETRY_VIRTUALENVS_CREATE="${POETRY_VIRTUALENVS_CREATE}"
 
 RUN apk add --update bash curl openssl libstdc++ proj-util \ 
