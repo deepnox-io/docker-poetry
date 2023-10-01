@@ -1,13 +1,14 @@
 ---
 kind: pipeline
 type: docker
-name: docker-build-push_frontend
+name: docker-build-push
 
 platform:
   os: linux
   arch: amd64
 
 steps:
+    
 - name: build-and-push-image
   image: plugins/docker
   settings:
@@ -16,7 +17,10 @@ steps:
     password: 
       from_secret: docker_password
     repo: deepnox/docker-poetry
-    tags: ${DRONE_COMMIT}.${DRONE_BUILD_NUMBER}
+    tags: 
+      - ${DRONE_COMMIT}.${DRONE_BUILD_NUMBER}
+      - ${DRONE_TAG/v/}
+      - latest
     dockerfile: ./Dockerfile 
     context: .
 
