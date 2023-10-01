@@ -16,7 +16,7 @@ steps:
       from_secret: docker_username
     password: 
       from_secret: docker_password
-    repo: deepnox/docker-poetry
+    repo: deepnox/python-poetry
     tags: 
       - ${DRONE_COMMIT}.${DRONE_BUILD_NUMBER}
       - ${DRONE_TAG/v/}
